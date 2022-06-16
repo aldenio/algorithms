@@ -1,4 +1,6 @@
-class Solution {
+package easy;
+
+public class Solution {
   
   /**
    * LeetCode 704. Binary Search
