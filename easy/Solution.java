@@ -199,7 +199,8 @@ public class Solution {
    */
 
   public ListNode middleNode(ListNode head) {
-    if (head == null) return null;
+    if (head == null)
+      return null;
     ListNode lastNode = head;
     ListNode middleNode = head;
     while (lastNode.next != null) {
@@ -210,6 +211,43 @@ public class Solution {
       }
     }
     return middleNode;
+  }
+
+  /**
+   * LeetCode: 19. Remove Nth Node From End of List
+   * 
+   * Given the head of a linked list, remove the nth node from the end of the list
+   * and return its head.
+   * 
+   * Definition for singly-linked list.
+   * public class ListNode {
+   * int val;
+   * ListNode next;
+   * ListNode() {}
+   * ListNode(int val) { this.val = val; }
+   * ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+   * }
+   */
+  public ListNode removeNthFromEnd(ListNode head, int n) {
+    ListNode node = head;
+    ListNode toRemove = head;    
+    // walk node pointer n nodes ahead
+    while(node.next != null && n >= 1){
+      node = node.next;
+      n--;
+    }
+    // if node pointer points to the end of the list, change list header.
+    if (node.next == null && n == 1) {
+      return head.next;
+    }
+    // if there is still list to run, move both pointer at the same time.
+    while(node.next != null){
+      node = node.next;
+      toRemove = toRemove.next;   
+    }
+    // toRemove will point to the node exactly before the node to be removed, só remove it.
+    toRemove.next = toRemove.next.next;
+    return head;
   }
 
 
