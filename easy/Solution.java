@@ -1,5 +1,7 @@
 package easy;
 
+import java.util.List;
+
 public class Solution {
 
   /**
@@ -143,22 +145,71 @@ public class Solution {
 
   /**
    * LeetCode 344. Reverse String
-   * Write a function that reverses a string. The input string is given as an array of characters s.
-   * You must do this by modifying the input array in-place with O(1) extra memory.
+   * Write a function that reverses a string. The input string is given as an
+   * array of characters s.
+   * You must do this by modifying the input array in-place with O(1) extra
+   * memory.
    */
   public void reverseString(char[] s) {
-     // left most char index
-     int l = 0;     
-     // right most char index
-     int r = s.length-1;
-     // while there is at least one char among indexes, change char positions.
-     while(l<r){
+    // left most char index
+    int l = 0;
+    // right most char index
+    int r = s.length - 1;
+    // while there is at least one char among indexes, change char positions.
+    while (l < r) {
       char aux = s[l];
       s[l] = s[r];
       s[r] = aux;
       l++;
       r--;
-     }
+    }
+  }
+
+  /**
+   * LeetCode 557. Reverse Words in a String III
+   * Given a string s, reverse the order of characters in each word within a
+   * sentence while still preserving whitespace and initial word order.
+   */
+  public String reverseWords(String s) {
+    int l = 0;
+    int r = 0;
+    StringBuilder buffer = new StringBuilder(s.length());
+    String[] worlds = s.split(" ");
+    for (int i = 0; i < worlds.length; i++) {
+      char[] world = worlds[i].toCharArray();
+      reverseString(world);
+      buffer.append(world);
+    }
+    return buffer.toString();
+  }
+
+  /**
+   * LeetCode 876. Middle of the Linked List
+   * Given the head of a singly linked list, return the middle node of the linked
+   * list
+   * 
+   * Notes: Definition for singly-linked list.
+   * public class ListNode {
+   * int val;
+   * ListNode next;
+   * ListNode() {}
+   * ListNode(int val) { this.val = val; }
+   * ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+   * }
+   */
+
+  public ListNode middleNode(ListNode head) {
+    if (head == null) return null;
+    ListNode lastNode = head;
+    ListNode middleNode = head;
+    while (lastNode.next != null) {
+      lastNode = lastNode.next;
+      middleNode = middleNode.next;
+      if (lastNode.next != null) {
+        lastNode = lastNode.next;
+      }
+    }
+    return middleNode;
   }
 
 
@@ -167,6 +218,26 @@ public class Solution {
    */
   private boolean isBadVersion(int num) {
     throw new UnsupportedOperationException("This code is implmented within leetcode platform.");
+  }
+
+  /**
+   * This class is here just to let questions compile.
+   */
+  class ListNode {
+    int val;
+    ListNode next;
+
+    ListNode() {
+    }
+
+    ListNode(int val) {
+      this.val = val;
+    }
+
+    ListNode(int val, ListNode next) {
+      this.val = val;
+      this.next = next;
+    }
   }
 
 }
