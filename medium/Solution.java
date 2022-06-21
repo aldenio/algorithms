@@ -98,11 +98,23 @@ public class Solution {
 
   /**
    * LeetCode 3. Longest Substring Without Repeating Characters
+   * 
    * Given a string s, find the length of the longest substring without repeating
    * characters.
    */
   public int lengthOfLongestSubstring(String s) {
-    throw new UnsupportedOperationException();
+    int longest = 0;
+    StringBuilder buff = new StringBuilder();
+    for (int i = 0; i < s.length(); i++) {
+      String currentLetter = String.valueOf(s.charAt(i));
+      int pos = buff.indexOf(currentLetter);
+      if (pos >= 0) {
+        buff.delete(0, pos + 1);
+      }
+      buff.append(currentLetter);
+      longest = (buff.length() > longest) ? buff.length() : longest;
+    }
+    return longest;
   }
 
   /**
