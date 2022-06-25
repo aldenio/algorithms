@@ -1,5 +1,6 @@
-package easy;
+package leetCode.easy;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Solution {
@@ -213,7 +214,45 @@ public class Solution {
     return middleNode;
   }
 
+  public int[][] floodFill(int[][] image, int sr, int sc, int color) {
+    class Point {
+      int x;
+      int y;
 
+      Point(int x, int y) {
+        this.x = x;
+        this.y = y;
+      }
+    }
+    int collorToChange = image[sr][sc];
+    if (collorToChange == color) {
+      return image;
+    }
+
+    List<Point> pointsToVisit = new ArrayList<>();
+    pointsToVisit.add(new Point(sr, sc));
+    while (!pointsToVisit.isEmpty()) {
+      Point p = pointsToVisit.remove(0);
+      image[p.x][p.y] = color;
+      if (p.x-1 >= 0 && image[p.x-1][p.y]==collorToChange){
+        pointsToVisit.add(new Point(p.x-1, p.y));
+      }
+      if (p.x+1 < image.length && image[p.x+1][p.y]==collorToChange){
+        pointsToVisit.add(new Point(p.x+1, p.y));
+      }
+      if (p.y-1 >= 0 && image[p.x][p.y-1]==collorToChange){
+        pointsToVisit.add(new Point(p.x, p.y-1));
+      }
+      if (p.y+1 < image[p.x].length && image[p.x][p.y+1]==collorToChange){
+        pointsToVisit.add(new Point(p.x, p.y+1));
+      }
+    }
+    return image;
+  }
+
+  /**
+   * Methods needed to compile locally
+   */
 
   /**
    * This method is here just to let questions compile.

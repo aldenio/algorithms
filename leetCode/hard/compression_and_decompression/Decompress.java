@@ -1,4 +1,4 @@
-package hard.compression_and_decompression;
+package leetCode.hard.compression_and_decompression;
 
 
 /**

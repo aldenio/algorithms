@@ -1,4 +1,6 @@
-package medium;
+package leetCode.medium;
+
+  import java.util.Arrays;
 
 public class Solution {
 
@@ -115,6 +117,40 @@ public class Solution {
       longest = (buff.length() > longest) ? buff.length() : longest;
     }
     return longest;
+  }
+
+  /**
+   * LeetCode 567. Permutation in String
+   * 
+   * Given two strings s1 and s2, return true if s2 contains a permutation of s1,
+   * or false otherwise.
+   * In other words, return true if one of s1's permutations is the substring of
+   * s2.
+   * Constraints:
+   * 1 <= s1.length, s2.length <= 10e4
+   * s1 and s2 consist of lowercase English letters.
+   */
+  public boolean checkInclusion(String s1, String s2) {
+    // s1 doesn't fit in s2
+    if (s1.length() > s2.length()) return false;
+
+    // sort the s1 char array to search
+    char[] s2Array = s2.toCharArray();
+    char[] s1Array = s1.toCharArray();
+    Arrays.sort(s1Array);
+    
+    char[] aux = new char[s1.length()];
+
+    for (int i = 0; i <= s2.length()-s1.length(); i++) {
+      if (Arrays.binarySearch(s1Array, s2.charAt(i))>=0) {
+        System.arraycopy(s2Array, i, aux, 0, aux.length);
+        Arrays.sort(aux);
+        if (Arrays.equals(s1Array, aux)) {
+          return true;
+        }
+      }
+    }
+    return false;
   }
 
   /**
