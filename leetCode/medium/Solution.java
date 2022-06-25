@@ -1,8 +1,75 @@
 package leetCode.medium;
 
-  import java.util.Arrays;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class Solution {
+
+  public static void main(String[] args) {
+    int max = new Solution().maxAreaOfIsland(new int[][]{new int[]{1,1,0,0,0},new int[]{1,1,0,0,0},new int[]{0,0,0,1,1},new int[]{0,0,0,1,1}});
+    System.out.println(max);
+  }
+
+
+  /**
+   * 695. Max Area of Island
+   * 
+   * You are given an m x n binary matrix grid. An island is a group of 1's
+   * (representing land) connected 4-directionally (horizontal or vertical.)
+   * You may assume all four edges of the grid are surrounded by water.
+   * The area of an island is the number of cells with a value 1 in the island.
+   * Return the maximum area of an island in grid. If there is no island, return 0
+   */
+  public int maxAreaOfIsland(int[][] grid) {
+    int max = 0;
+    for (int x = 0; x < grid.length; x++) {
+      for (int y = 0; y < grid[x].length; y++) {
+        if (grid[x][y] == 1) {
+          int size = islandMeasureAndMark(grid, x, y);
+          max = (size > max) ? size : max;
+        }
+      }
+    }
+    return max;
+  }
+
+  private int islandMeasureAndMark(int[][] grid, int x, int y) {
+    class Point {
+      int x;
+      int y;
+
+      Point(int x, int y) {
+        this.x = x;
+        this.y = y;
+      }
+    }
+
+    int size = 0;
+    List<Point> pointsToVisit = new ArrayList<>();
+    pointsToVisit.add(new Point(x, y));
+    while (!pointsToVisit.isEmpty()) {
+      Point p = pointsToVisit.remove(0);
+      if (grid[p.x][p.y] == 2){
+        continue;
+      }
+      grid[p.x][p.y] = 2;
+      size++;
+      if (p.x - 1 >= 0 && grid[p.x - 1][p.y] == 1) {
+        pointsToVisit.add(new Point(p.x - 1, p.y));
+      }
+      if (p.x + 1 < grid.length && grid[p.x + 1][p.y] == 1) {
+        pointsToVisit.add(new Point(p.x + 1, p.y));
+      }
+      if (p.y - 1 >= 0 && grid[p.x][p.y - 1] == 1) {
+        pointsToVisit.add(new Point(p.x, p.y - 1));
+      }
+      if (p.y + 1 < grid[p.x].length && grid[p.x][p.y + 1] == 1) {
+        pointsToVisit.add(new Point(p.x, p.y + 1));
+      }
+    }
+    return size;
+  }
 
   /**
    * LeetCode 189. Rotate Array
@@ -92,7 +159,7 @@ public class Solution {
       node = node.next;
       toRemove = toRemove.next;
     }
-    // toRemove will point to the node exactly before the node to be removed, só
+    // toRemove will point to the node exactly before the node to be removed, so
     // remove it.
     toRemove.next = toRemove.next.next;
     return head;
@@ -132,17 +199,18 @@ public class Solution {
    */
   public boolean checkInclusion(String s1, String s2) {
     // s1 doesn't fit in s2
-    if (s1.length() > s2.length()) return false;
+    if (s1.length() > s2.length())
+      return false;
 
     // sort the s1 char array to search
     char[] s2Array = s2.toCharArray();
     char[] s1Array = s1.toCharArray();
     Arrays.sort(s1Array);
-    
+
     char[] aux = new char[s1.length()];
 
-    for (int i = 0; i <= s2.length()-s1.length(); i++) {
-      if (Arrays.binarySearch(s1Array, s2.charAt(i))>=0) {
+    for (int i = 0; i <= s2.length() - s1.length(); i++) {
+      if (Arrays.binarySearch(s1Array, s2.charAt(i)) >= 0) {
         System.arraycopy(s2Array, i, aux, 0, aux.length);
         Arrays.sort(aux);
         if (Arrays.equals(s1Array, aux)) {
