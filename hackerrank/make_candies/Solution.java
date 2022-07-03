@@ -2,8 +2,6 @@ package hackerrank.make_candies;
 
 import java.io.IOException;
 import java.math.BigInteger;
-import java.util.HashMap;
-import java.util.Map;
 
 class Result {
 
@@ -79,6 +77,6 @@ public class Solution {
 
   public static void run(long t, long m, long w, long p, long n, long r) {
     long res = Result.minimumPasses(m, w, p, n);
-    System.out.println("Teste " + t + ": " + ((res == r) ? " - OK - " : "ERROR(" + res + ")"));
+    System.out.println("Test " + t + ": " + ((res == r) ? " - OK - " : "Expected:" +r+", Actual:"+ res));
   }
 }

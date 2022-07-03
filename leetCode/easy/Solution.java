@@ -6,6 +6,99 @@ import java.util.List;
 public class Solution {
 
   /**
+   * LeetCode 4. Median of Two Sorted Arrays
+   * 
+   * Given two sorted arrays nums1 and nums2 of size m and n respectively, return the median of the two sorted arrays.
+   * The overall run time complexity should be O(log (m+n)).
+   */
+  public double findMedianSortedArrays(int[] nums1, int[] nums2) {
+    int[] merged = merge(nums1, nums2);
+    int middle = (merged.length / 2);
+    if (merged.length % 2 == 1) {
+      return merged[middle];
+    } else {
+      return (merged[middle - 1] + merged[middle]) / 2.0;
+    }
+  }
+
+  public int[] merge(int[] a, int[] b) {
+    int[] result = new int[a.length + b.length];
+    int ia = 0;
+    int ib = 0;
+    for (int i = 0; i < result.length; i++) {
+      if (ib >= b.length) {
+        result[i] = a[ia];
+        ia++;
+      } else if (ia >= a.length) {
+        result[i] = b[ib];
+        ib++;
+      } else if (a[ia] < b[ib]) {
+        result[i] = a[ia];
+        ia++;
+      } else if (b[ib] < a[ia]) {
+        result[i] = b[ib];
+        ib++;
+      } else {
+        result[i] = a[ia];
+        i++;
+        result[i] = b[ib];
+        ia++;
+        ib++;
+      }
+    }
+    return result;
+  }
+
+  /**
+   * LeetCode 2. Add Two Numbers
+   * 
+   * You are given two non-empty linked lists representing two non-negative
+   * integers.
+   * The digits are stored in reverse order, and each of their nodes contains a
+   * single digit.
+   * Add the two numbers and return the sum as a linked list.
+   * You may assume the two numbers do not contain any leading zero, except the
+   * number 0 itself.
+   */
+  public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
+    ListNode root = new ListNode();
+    ListNode aux = root;
+
+    // add both lists
+    while (l1 != null && l2 != null) {
+      aux.next = new ListNode(l1.val + l2.val);
+      // start a new round
+      l1 = l1.next;
+      l2 = l2.next;
+      aux = aux.next;
+    }
+    if (l1 != null) {
+      aux.next = l1;
+    }
+    if (l2 != null) {
+      aux.next = l2;
+    }
+
+    // reduce to one digit
+    aux = root;
+    int remainder = 0;
+    while (aux.next != null) {
+      aux = aux.next;
+      aux.val += remainder;
+      if (aux.val > 9) {
+        aux.val -= 10;
+        remainder = 1;
+      } else {
+        remainder = 0;
+      }
+    }
+    if (remainder == 1) {
+      aux.next = new ListNode(1);
+    }
+    return root.next;
+  }
+
+  /**
    * LeetCode 704. Binary Search
    * 
    * Given an array of integers nums which is sorted in ascending order, and an
@@ -214,14 +307,18 @@ public class Solution {
     return middleNode;
   }
 
-
   /**
    * LeetCode 733. Flood Fill
    * 
-   * An image is represented by an m x n integer grid image where image[i][j] represents the pixel value of the image.
-   * You are also given three integers sr, sc, and color. You should perform a flood fill on the image starting from the pixel image[sr][sc].
-   * To perform a flood fill, consider the starting pixel, plus any pixels connected 4-directionally to the starting pixel of the same color as the starting pixel, 
-   * plus any pixels connected 4-directionally to those pixels (also with the same color), and so on. 
+   * An image is represented by an m x n integer grid image where image[i][j]
+   * represents the pixel value of the image.
+   * You are also given three integers sr, sc, and color. You should perform a
+   * flood fill on the image starting from the pixel image[sr][sc].
+   * To perform a flood fill, consider the starting pixel, plus any pixels
+   * connected 4-directionally to the starting pixel of the same color as the
+   * starting pixel,
+   * plus any pixels connected 4-directionally to those pixels (also with the same
+   * color), and so on.
    * Replace the color of all of the aforementioned pixels with color.
    * 
    */
@@ -245,17 +342,17 @@ public class Solution {
     while (!pointsToVisit.isEmpty()) {
       Point p = pointsToVisit.remove(0);
       image[p.x][p.y] = color;
-      if (p.x-1 >= 0 && image[p.x-1][p.y]==collorToChange){
-        pointsToVisit.add(new Point(p.x-1, p.y));
+      if (p.x - 1 >= 0 && image[p.x - 1][p.y] == collorToChange) {
+        pointsToVisit.add(new Point(p.x - 1, p.y));
       }
-      if (p.x+1 < image.length && image[p.x+1][p.y]==collorToChange){
-        pointsToVisit.add(new Point(p.x+1, p.y));
+      if (p.x + 1 < image.length && image[p.x + 1][p.y] == collorToChange) {
+        pointsToVisit.add(new Point(p.x + 1, p.y));
       }
-      if (p.y-1 >= 0 && image[p.x][p.y-1]==collorToChange){
-        pointsToVisit.add(new Point(p.x, p.y-1));
+      if (p.y - 1 >= 0 && image[p.x][p.y - 1] == collorToChange) {
+        pointsToVisit.add(new Point(p.x, p.y - 1));
       }
-      if (p.y+1 < image[p.x].length && image[p.x][p.y+1]==collorToChange){
-        pointsToVisit.add(new Point(p.x, p.y+1));
+      if (p.y + 1 < image[p.x].length && image[p.x][p.y + 1] == collorToChange) {
+        pointsToVisit.add(new Point(p.x, p.y + 1));
       }
     }
     return image;
