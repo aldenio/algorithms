@@ -6,9 +6,28 @@ import java.util.List;
 
 public class Solution {
 
-  public static void main(String[] args) {
-    int max = new Solution().maxAreaOfIsland(new int[][]{new int[]{1,1,0,0,0},new int[]{1,1,0,0,0},new int[]{0,0,0,1,1},new int[]{0,0,0,1,1}});
-    System.out.println(max);
+
+  /**
+   * 7. Reverse Integer
+   * 
+   * Given a signed 32-bit integer x, return x with its digits reversed. 
+   * If reversing x causes the value to go outside the signed 32-bit integer range [-231, 231 - 1], then return 0.
+   * Assume the environment does not allow you to store 64-bit integers (signed or unsigned).
+   */
+  public int reverse(int x) {
+    int signal = (x < 0)? -1:1;
+    long y = 0;
+    x = Math.abs(x);
+    while(x > 0){
+      y = (y*10) + x % 10;
+      x /= 10;
+      System.out.println("x="+x+", y="+y);
+    }
+    if (y> Integer.MAX_VALUE) {
+      return 0;
+    } else {
+      return (int) y * signal;      
+    }
   }
 
 
